@@ -137,8 +137,14 @@ export const enTranslations = {
     "isha": "Isha",
     "jummah": "Jummah Prayer",
     "next_prayer": "Next Prayer",
-    "hijri_date": "Hijri Date"
+    "hijri_date": "Hijri Date",
+    "countdown": "Countdown"
   },
+  
+  // Time units
+  "hours": "Hours",
+  "minutes": "Minutes",
+  "seconds": "Seconds",
   
   // Footer
   "footer": {

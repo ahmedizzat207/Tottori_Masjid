@@ -137,8 +137,14 @@ export const jpTranslations = {
     "isha": "イシャー",
     "jummah": "金曜礼拝",
     "next_prayer": "次の礼拝",
-    "hijri_date": "ヒジュラ暦"
+    "hijri_date": "ヒジュラ暦",
+    "countdown": "カウントダウン"
   },
+  
+  // Time units
+  "hours": "時間",
+  "minutes": "分",
+  "seconds": "秒",
   
   // Footer
   "footer": {

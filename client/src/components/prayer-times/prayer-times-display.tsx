@@ -6,6 +6,7 @@ import { PrayerTimeCalculator, PrayerTimes, PrayerTimesConfig } from "./prayer-t
 import { Clock, Sunrise, Sun, Sunset, Moon } from "lucide-react";
 import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
+import { PrayerCountdown } from "./prayer-countdown-new";
 
 export interface PrayerTimesDisplayProps {
   latitude?: number;
@@ -126,16 +127,17 @@ export default function PrayerTimesDisplay({
           </div>
         </div>
 
-        {nextPrayer && (
-          <div className="mb-4 p-3 bg-primary/10 rounded-md">
-            <div className="text-xs font-medium text-primary uppercase">
-              {t("prayer.next_prayer")}
-            </div>
-            <div className="flex justify-between items-center mt-1">
-              <div className="font-medium">
-                {getPrayerName(nextPrayer.name)}
+        {/* Prayer Countdown */}
+        {prayerConfig && prayerTimes && nextPrayer && (
+          <div className="mb-4">
+            <div className="bg-primary/5 p-4 rounded-lg">
+              <div className="text-xs font-medium text-primary uppercase text-center mb-1">
+                {t("prayer.countdown")}
               </div>
-              <div className="text-muted-foreground">
+              <h3 className="text-center text-lg font-semibold mb-1">
+                {t("prayer.next_prayer")}: {getPrayerName(nextPrayer.name)}
+              </h3>
+              <div className="text-center text-2xl font-bold text-primary">
                 {nextPrayer.time}
               </div>
             </div>

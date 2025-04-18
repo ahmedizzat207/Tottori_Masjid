@@ -137,8 +137,14 @@ export const arTranslations = {
     "isha": "العشاء",
     "jummah": "صلاة الجمعة",
     "next_prayer": "الصلاة القادمة",
-    "hijri_date": "التاريخ الهجري"
+    "hijri_date": "التاريخ الهجري",
+    "countdown": "العد التنازلي"
   },
+  
+  // Time units
+  "hours": "ساعات",
+  "minutes": "دقائق",
+  "seconds": "ثواني",
   
   // Footer
   "footer": {
