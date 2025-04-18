@@ -94,6 +94,7 @@ export default function Header() {
               <SelectContent>
                 <SelectItem value="en">English</SelectItem>
                 <SelectItem value="jp">日本語</SelectItem>
+                <SelectItem value="ar">العربية</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="ghost" size="icon" onClick={toggleTheme}>

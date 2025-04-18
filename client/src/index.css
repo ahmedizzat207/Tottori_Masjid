@@ -1,5 +1,6 @@
 /* Import Arabic font */
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,13 +14,49 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+  
+  /* RTL support for Arabic language */
+  html.rtl {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  html.rtl * {
+    letter-spacing: 0;
+  }
 }
 
 @layer utilities {
   .font-arabic {
-    font-family: 'Amiri', serif;
-    direction: rtl;
-    display: inline-block;
+    font-family: 'Amiri', 'Noto Sans Arabic', serif;
+  }
+  
+  html.rtl .font-arabic {
+    font-family: 'Amiri', 'Noto Sans Arabic', serif;
+  }
+  
+  html.rtl .reverse-flex {
+    flex-direction: row-reverse;
+  }
+  
+  html.rtl .ml-auto {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  
+  html.rtl .mr-auto {
+    margin-right: 0;
+    margin-left: auto;
+  }
+  
+  html.rtl .space-x-4 > * + * {
+    margin-left: 0;
+    margin-right: 1rem;
+  }
+  
+  html.rtl .space-x-2 > * + * {
+    margin-left: 0;
+    margin-right: 0.5rem;
   }
   
   .container-custom {
@@ -36,5 +73,16 @@
   
   .section-padding {
     @apply py-12 md:py-20;
+  }
+  
+  /* Text direction control */
+  .rtl-text {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .ltr-text {
+    direction: ltr;
+    text-align: left;
   }
 }
