@@ -65,10 +65,18 @@ export const arTranslations = {
     "upcoming": "الفعاليات القادمة",
     "past": "الفعاليات السابقة",
     "no_events": "لا توجد فعاليات مجدولة",
+    "no_events_message": "لا توجد فعاليات مجدولة لهذا التاريخ.",
+    "no_upcoming_events": "لا توجد فعاليات قادمة في الوقت الحالي.",
+    "no_past_events": "لا توجد فعاليات سابقة لعرضها.",
+    "events_for_date": "فعاليات {{date}}",
     "location": "الموقع",
     "date": "التاريخ",
     "time": "الوقت"
   },
+  
+  // Calendar UI
+  "calendar": "التقويم",
+  "list": "القائمة",
   
   // Gallery Page
   "gallery": {

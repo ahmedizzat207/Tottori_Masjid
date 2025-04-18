@@ -65,10 +65,18 @@ export const enTranslations = {
     "upcoming": "Upcoming Events",
     "past": "Past Events",
     "no_events": "No events scheduled",
+    "no_events_message": "There are no events scheduled for this date.",
+    "no_upcoming_events": "There are no upcoming events at this time.",
+    "no_past_events": "There are no past events to show.",
+    "events_for_date": "Events for {{date}}",
     "location": "Location",
     "date": "Date",
     "time": "Time"
   },
+  
+  // Calendar UI
+  "calendar": "Calendar",
+  "list": "List",
   
   // Gallery Page
   "gallery": {

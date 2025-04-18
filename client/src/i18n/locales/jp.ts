@@ -65,10 +65,18 @@ export const jpTranslations = {
     "upcoming": "今後のイベント",
     "past": "過去のイベント",
     "no_events": "予定されているイベントはありません",
+    "no_events_message": "この日付に予定されているイベントはありません。",
+    "no_upcoming_events": "現在、予定されているイベントはありません。",
+    "no_past_events": "表示する過去のイベントはありません。",
+    "events_for_date": "{{date}}のイベント",
     "location": "場所",
     "date": "日付",
     "time": "時間"
   },
+  
+  // Calendar UI
+  "calendar": "カレンダー",
+  "list": "リスト",
   
   // Gallery Page
   "gallery": {
