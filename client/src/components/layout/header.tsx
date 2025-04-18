@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { useLanguage } from "@/hooks/use-language";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
+import { Logo } from "@/components/ui/logo";
 import {
   Select,
   SelectContent,
@@ -12,7 +13,6 @@ import {
 } from "@/components/ui/select";
 import {
   Menu,
-  Church,
   Moon,
   Sun,
 } from "lucide-react";
@@ -22,7 +22,18 @@ export default function Header() {
   const [location] = useLocation();
   const { t, currentLanguage, changeLanguage } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  // Track scrolling for header appearance
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { href: "/", label: t("nav.home") },
@@ -46,14 +57,18 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
+    <header className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
+      isScrolled 
+        ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2" 
+        : "bg-transparent py-4"
+    }`}>
+      <div className="container flex items-center">
         <div className="flex items-center mr-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <Church className="h-6 w-6 text-primary" />
-            <span className="font-bold text-lg tracking-tight">
-              {t("masjid_name")}
-            </span>
+          <Link href="/" className="transition-transform hover:scale-105 duration-300">
+            <Logo 
+              size="md" 
+              variant={theme === "dark" ? "light" : "dark"}
+            />
           </Link>
         </div>
 
@@ -64,7 +79,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={`transition-colors hover:text-primary ${
-                  location === item.href ? "text-primary" : "text-foreground/60"
+                  location === item.href ? "text-primary font-semibold" : "text-foreground/80"
                 }`}
               >
                 {item.label}
