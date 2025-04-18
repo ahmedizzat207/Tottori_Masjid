@@ -153,6 +153,7 @@ export const arTranslations = {
   "hours": "ساعات",
   "minutes": "دقائق",
   "seconds": "ثواني",
+  "until": "حتى",
   
   // Footer
   "footer": {

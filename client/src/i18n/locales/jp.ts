@@ -153,6 +153,7 @@ export const jpTranslations = {
   "hours": "時間",
   "minutes": "分",
   "seconds": "秒",
+  "until": "まで",
   
   // Footer
   "footer": {

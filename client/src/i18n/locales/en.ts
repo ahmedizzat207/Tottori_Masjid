@@ -153,6 +153,7 @@ export const enTranslations = {
   "hours": "Hours",
   "minutes": "Minutes",
   "seconds": "Seconds",
+  "until": "Until",
   
   // Footer
   "footer": {

@@ -1,12 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useLanguage } from "@/hooks/use-language";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PrayerTimeCalculator, PrayerTimes, PrayerTimesConfig } from "./prayer-time-calculation";
-import { Clock, Sunrise, Sun, Sunset, Moon } from "lucide-react";
+import { Clock, Sunrise, Sun, Sunset, Moon, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
-import { PrayerCountdown } from "./prayer-countdown-new";
+import { cn } from "@/lib/utils";
+import { PrayerCountdownTimer } from "./prayer-countdown-timer";
+
+// Helper function to convert time string like "14:30" to a Date object for today
+const getTimeAsDate = (timeStr: string): Date => {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+  return date;
+};
 
 export interface PrayerTimesDisplayProps {
   latitude?: number;
@@ -86,20 +95,26 @@ export default function PrayerTimesDisplay({
   // Loading state
   if (isLoadingConfig || !prayerTimes) {
     return (
-      <Card className={className}>
-        <CardHeader className="bg-primary text-white pb-4">
-          <CardTitle className="text-lg flex justify-between items-center">
-            <span>{t("home.prayer_times")}</span>
-            <Clock className="h-5 w-5" />
-          </CardTitle>
+      <Card className={cn("overflow-hidden shadow-md", className)}>
+        <CardHeader className="bg-primary text-white pb-3 px-6">
+          <div className="flex flex-col items-center">
+            <CardTitle className="text-xl flex items-center gap-2 mb-1">
+              <Clock className="h-5 w-5" />
+              <span>{t("home.prayer_times")}</span>
+            </CardTitle>
+            <Skeleton className="h-4 w-32 bg-white/20 mt-3" />
+            <Skeleton className="h-3 w-24 bg-white/20 mt-2" />
+          </div>
         </CardHeader>
-        <CardContent className="pt-4">
-          <div className="flex flex-col gap-2">
-            <Skeleton className="h-4 w-32" />
-            <Skeleton className="h-3 w-24 mb-2" />
+        <CardContent className="p-6">
+          <Skeleton className="h-20 w-full mb-6" />
+          <div className="space-y-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="flex justify-between items-center py-3 border-b">
-                <Skeleton className="h-5 w-20" />
+              <div key={i} className="flex justify-between items-center py-3">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-10 w-10 rounded-full" />
+                  <Skeleton className="h-5 w-24" />
+                </div>
                 <Skeleton className="h-5 w-16" />
               </div>
             ))}
@@ -110,55 +125,84 @@ export default function PrayerTimesDisplay({
   }
 
   return (
-    <Card className={className}>
-      <CardHeader className="bg-primary text-white pb-4">
-        <CardTitle className="text-lg flex justify-between items-center">
-          <span>{t("home.prayer_times")}</span>
-          <Clock className="h-5 w-5" />
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="pt-4">
-        <div className="mb-4">
-          <div className="text-sm text-muted-foreground">
-            {format(currentTime, "EEEE, MMMM d, yyyy")}
+    <Card className={cn("overflow-hidden shadow-md transition-all duration-300", className)}>
+      <CardHeader className="bg-primary text-white pb-3 px-6">
+        <div className="flex flex-col items-center">
+          <CardTitle className="text-xl flex items-center gap-2 mb-1">
+            <Clock className="h-5 w-5" />
+            <span>{t("home.prayer_times")}</span>
+          </CardTitle>
+          
+          <div className="flex items-center gap-2 text-sm text-primary-foreground/90 mt-1">
+            <Calendar className="h-4 w-4" />
+            <span>{format(currentTime, "EEEE, MMMM d, yyyy")}</span>
           </div>
-          <div className="text-xs text-muted-foreground mt-1">
+          
+          <div className="text-xs text-primary-foreground/80 mt-1">
             {hijriDate}
           </div>
         </div>
-
-        {/* Prayer Countdown */}
+      </CardHeader>
+      
+      <CardContent className="p-0">
+        {/* Prayer Countdown Section */}
         {prayerConfig && prayerTimes && nextPrayer && (
-          <div className="mb-4">
-            <div className="bg-primary/5 p-4 rounded-lg">
-              <div className="text-xs font-medium text-primary uppercase text-center mb-1">
-                {t("prayer.countdown")}
+          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 p-6 border-b border-b-muted/30">
+            <div className="flex flex-col items-center">
+              <div className="uppercase tracking-wider text-xs font-semibold text-primary mb-2">
+                {t("prayer.next_prayer")}
               </div>
-              <h3 className="text-center text-lg font-semibold mb-1">
-                {t("prayer.next_prayer")}: {getPrayerName(nextPrayer.name)}
+              
+              <h3 className="text-2xl font-bold text-primary mb-4 text-center">
+                {getPrayerName(nextPrayer.name)}
               </h3>
-              <div className="text-center text-2xl font-bold text-primary">
-                {nextPrayer.time}
-              </div>
+              
+              <PrayerCountdownTimer 
+                targetTime={getTimeAsDate(nextPrayer.time)}
+                prayerName={getPrayerName(nextPrayer.name)}
+                className="mt-2"
+              />
             </div>
           </div>
         )}
 
-        <div className="space-y-1">
-          {Object.entries(prayerTimes).map(([key, time]) => (
-            <div 
-              key={key} 
-              className={`flex justify-between items-center py-3 border-b ${
-                nextPrayer?.name === key ? 'bg-primary/5' : ''
-              }`}
-            >
-              <div className="flex items-center">
-                <span className="mr-2">{prayerIcons[key as keyof typeof prayerIcons]}</span>
-                <span>{getPrayerName(key)}</span>
-              </div>
-              <div className="text-muted-foreground">{time}</div>
-            </div>
-          ))}
+        {/* Prayer Times List */}
+        <div className="p-4">
+          <div className="grid grid-cols-1 divide-y divide-muted/50">
+            {Object.entries(prayerTimes).map(([key, time]) => {
+              const isNext = nextPrayer?.name === key;
+              return (
+                <div 
+                  key={key} 
+                  className={cn(
+                    "flex justify-between items-center py-4 px-2 rounded-lg transition-colors duration-300 hover:bg-muted/30",
+                    isNext && "bg-primary/5 font-medium"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "flex items-center justify-center w-10 h-10 rounded-full",
+                      isNext ? "bg-primary text-white" : "bg-muted"
+                    )}>
+                      {prayerIcons[key as keyof typeof prayerIcons]}
+                    </div>
+                    <span className={cn(
+                      "text-base transition-colors", 
+                      isNext ? "text-primary font-medium" : "text-foreground"
+                    )}>
+                      {getPrayerName(key)}
+                    </span>
+                  </div>
+                  <div className={cn(
+                    "text-lg font-mono font-medium", 
+                    isNext ? "text-primary" : "text-muted-foreground"
+                  )}>
+                    {time}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </CardContent>
     </Card>
