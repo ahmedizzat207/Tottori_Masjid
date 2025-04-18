@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+  --font-amiri: "Amiri", serif;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold;
+  }
+
+  /* RTL specific styles */
+  [dir="rtl"] .flip-direction {
+    flex-direction: row-reverse;
+  }
+
+  [dir="rtl"] .text-align-start {
+    text-align: right;
+  }
+
+  [dir="rtl"] .text-align-end {
+    text-align: left;
+  }
+}
+
+@layer utilities {
+  .arabic-text {
+    font-family: var(--font-amiri);
+  }
+
+  /* RTL utility classes */
+  .rtl-grid {
+    @apply flex flex-col;
+  }
+
+  [dir="rtl"] .rtl-grid {
+    flex-direction: row-reverse;
+  }
+
+  .rtl-flex {
+    @apply flex;
+  }
+
+  [dir="rtl"] .rtl-flex {
+    flex-direction: row-reverse;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  .btn {
+    @apply px-4 py-2 rounded-md transition-all duration-300 font-medium;
+  }
+
+  .btn-primary {
+    @apply bg-mosque-green-700 hover:bg-mosque-green-800 text-white shadow-sm;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-semibold text-center mb-8 text-mosque-green-950;
+  }
+
+  .section-container {
+    @apply py-16 md:py-20;
+  }
+}
