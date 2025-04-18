@@ -97,13 +97,28 @@ export default function EnhancedHeroSection() {
               </div>
             </div>
             
-            <div className="relative rounded-lg overflow-hidden shadow-2xl">
-              <div className="absolute inset-0 bg-primary/20"></div>
-              <img
-                src="https://images.pexels.com/photos/3823542/pexels-photo-3823542.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt="Tottori Masjid"
-                className="object-cover w-full h-[400px]"
-              />
+            <div className="relative rounded-lg overflow-hidden shadow-2xl h-[400px]">
+              <div className="absolute inset-0 bg-primary/10 z-10"></div>
+              <div 
+                className="w-full h-full"
+                style={{
+                  backgroundImage: `${patternBg}, linear-gradient(135deg, hsl(157, 70%, 25%) 0%, hsl(157, 60%, 35%) 100%)`,
+                  backgroundSize: '10px 10px, cover',
+                  backgroundPosition: 'center',
+                  backgroundBlendMode: 'soft-light, normal'
+                }}
+              ></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center z-20 p-6">
+                <div className="w-24 h-24 md:w-32 md:h-32 mb-4">
+                  <img src="/images/mosque-logo-large.svg" alt="Tottori Masjid Logo" className="w-full h-full" />
+                </div>
+                <h3 className="text-white text-xl md:text-2xl font-bold text-center">
+                  Islamic Center of Tottori Prefecture
+                </h3>
+                <p className="text-white/80 text-center mt-2 max-w-md">
+                  A place of worship, learning, and community serving Tottori Prefecture
+                </p>
+              </div>
             </div>
           </div>
         </div>
