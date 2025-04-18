@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import PrayerTimesDisplay from "@/components/prayer-times/prayer-times-display";
+import EnhancedPrayerDisplay from "@/components/prayer-times/enhanced-prayer-display";
 import EnhancedHeroSection from "@/components/home/enhanced-hero-section";
 import ServicesOverview from "@/components/home/services-overview";
 import UpcomingEvents from "@/components/home/upcoming-events";
@@ -15,11 +15,16 @@ export default function Home() {
     <div>
       <EnhancedHeroSection />
       
-      <div className="py-16 bg-muted/30">
+      <div className="py-16 bg-gradient-to-b from-muted/30 to-muted/10">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Daily Prayer Times</h2>
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-2">Daily Prayer Times</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Check accurate prayer times for Tottori Masjid based on geographical location
+            </p>
+          </div>
           <div className="max-w-xl mx-auto">
-            <PrayerTimesDisplay />
+            <EnhancedPrayerDisplay />
           </div>
         </div>
       </div>
